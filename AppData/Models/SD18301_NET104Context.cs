@@ -16,7 +16,9 @@ namespace AppData.Models
             : base(options)
         {
         }
-
+        // Thêm DBSet vào 
+        public DbSet<User> Users { get; set; }
+        public DbSet<HoaDon> HoaDons { get; set; }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             if (!optionsBuilder.IsConfigured)
