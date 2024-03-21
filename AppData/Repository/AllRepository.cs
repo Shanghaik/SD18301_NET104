@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace AppData.Repository
 {
-    internal class AllRepository<T> : IAllRepository<T> where T : class
+    public class AllRepository<T> : IAllRepository<T> where T : class
     {
         // Khai báo DBContext
         SD18301_NET104Context _context;
@@ -62,7 +62,7 @@ namespace AppData.Repository
 
         public T GetByID(dynamic id)
         {
-            return _dbSet.Find(id).ToList(); // Phương thức Find mà truyền trực tiếp tham số chỉ dùng với PK
+            return _dbSet.Find(id);// Phương thức Find mà truyền trực tiếp tham số chỉ dùng với PK
         }
 
         public bool UpdateObj(T obj)
