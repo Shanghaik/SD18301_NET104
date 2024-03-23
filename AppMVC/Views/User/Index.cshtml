@@ -2,11 +2,20 @@
 
 @{
     ViewData["Title"] = "Index";
+    var username = TempData["Username"];
 }
 
 <h1>Index</h1>
-
-<p>
+@{
+    if (username != null)
+    {
+        <h4>Xin chào @username</h4>
+    }else
+    {
+        <h4>Bạn chưa Dunk nhập</h4>
+    }
+}
+    <p>
     <a asp-action="Create">Create New</a>
 </p>
 <table class="table">

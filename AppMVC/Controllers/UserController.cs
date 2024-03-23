@@ -30,7 +30,7 @@ namespace AppMVC.Controllers
         [HttpPost]
         public IActionResult Create(User user) // Action này để xử lý dã ta và thêm vào Db
         {
-            user.Id = Guid.NewGuid();   
+            user.Id = Guid.NewGuid();
             repo.CreateObj(user);
             return RedirectToAction("Index");
         }
@@ -51,6 +51,26 @@ namespace AppMVC.Controllers
             var user = repo.GetByID(id);
             repo.DeleteObj(user);
             return RedirectToAction("Index");
+        }
+        public IActionResult Details(Guid id) // Details
+        {
+            var user = repo.GetByID(id);
+            return View(user);
+        }
+        public IActionResult Login()
+        {
+            return View();
+        }
+        [HttpPost]
+        public IActionResult Login(string username, string password)
+        {
+            // Lấy ra user có thông tin trùng với username và password được nhập vào
+            var user = repo.GetAll().FirstOrDefault(p => p.UserName == username && p.Password == password);
+            if(user!=null)
+            {
+                TempData["Username"] = username;
+                return RedirectToAction("Index", "User");
+            }else return Content("Đăng nhập thất bại");
         }
     }
 }

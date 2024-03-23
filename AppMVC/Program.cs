@@ -1,4 +1,4 @@
-namespace AppMVC
+﻿namespace AppMVC
 {
     public class Program
     {
@@ -26,9 +26,9 @@ namespace AppMVC
 
             app.UseAuthorization();
 
-            app.MapControllerRoute(
+            app.MapControllerRoute( // Đường dẫn default của chương trình
                 name: "default",
-                pattern: "{controller=Home}/{action=Index}/{id?}");
+                pattern: "{controller=User}/{action=Login}");
 
             app.Run();
         }
