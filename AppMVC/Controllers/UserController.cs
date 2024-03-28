@@ -17,10 +17,18 @@ namespace AppMVC.Controllers
             repo = new AllRepository<User>(context, context.Users);
         }
         // 1. Lấy ra data
-        public IActionResult Index()
+        public IActionResult Index(string name = "87t7r7r68r76dsz")
         {
+            ViewData["count"] = 0;
             var data = repo.GetAll(); // Lấy tất cả danh sách của User
-            return View(data);
+            // Lấy danh sách cần tìm kiếm theo tên có chứa chuỗi được nhập vào
+            var searchList = repo.GetAll().Where(p => p.Name.Contains(name)).ToList();
+            if (searchList.Count != 0)
+            {     
+                ViewData["count"] = searchList.Count; // Số lượng bản ghi đã được tìm thấy
+                return View(searchList);
+            }
+            else return View(data);
         }
         // 3. Tạo mới
         public IActionResult Create() // Action này để mở form - trả về view Create để điền thông tin
@@ -66,11 +74,12 @@ namespace AppMVC.Controllers
         {
             // Lấy ra user có thông tin trùng với username và password được nhập vào
             var user = repo.GetAll().FirstOrDefault(p => p.UserName == username && p.Password == password);
-            if(user!=null)
+            if (user != null)
             {
                 TempData["Username"] = username;
                 return RedirectToAction("Index", "User");
-            }else return Content("Đăng nhập thất bại");
+            }
+            else return Content("Đăng nhập thất bại");
         }
     }
 }

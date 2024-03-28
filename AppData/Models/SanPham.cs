@@ -6,7 +6,10 @@ using System.Threading.Tasks;
 
 namespace AppData.Models
 {
-    internal class SanPham
+    public class SanPham
     {
+        public Guid Id { get; set; }
+        public string Name { get; set; }
+        public string ImgUrl { get; set; }
     }
 }

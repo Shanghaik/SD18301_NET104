@@ -19,6 +19,7 @@ namespace AppData.Models
         // Thêm DBSet vào 
         public DbSet<User> Users { get; set; }
         public DbSet<HoaDon> HoaDons { get; set; }
+        public DbSet<SanPham> SanPham { get; set; }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             if (!optionsBuilder.IsConfigured)
