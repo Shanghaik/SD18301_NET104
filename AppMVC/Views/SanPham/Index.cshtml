@@ -2,6 +2,7 @@
 
 @{
     ViewData["Title"] = "Index";
+    List<string> extensions = new List<string>() { ".jpg", ".png", ".tiff", ".gif", "jpeg" };
 }
 
 <h1>Index</h1>
@@ -25,23 +26,33 @@
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Id)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Name)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ImgUrl)
-            </td>
-            <td>
-                @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
-            </td>
-        </tr>
-}
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Id)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @{
+                        var extension = System.IO.Path.GetExtension(item.ImgUrl); // Lấy đuôi ảnh
+                    }
+                    @if (@extensions.Contains(extension))
+                    {
+                        <img src="~/img/@item.ImgUrl" height="100px">
+                    }else
+                    {
+                    <img src="https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.facebook.com%2Finternetexplorerbeta%2Fposts%2Fanh-li%25C3%25AAm-gi%25C3%25A0nh-cup-v%25C3%25A0ng-th%25E1%25BB%2583-hi%25E1%25BB%2587n-%25C4%2591%25E1%25BA%25B3ng-c%25E1%25BA%25A5p-out-tr%25C3%25ACnh-to%25C3%25A0n-b%25E1%25BB%2599-c%25C3%25A1c-%25C4%2591%25E1%25BB%2591i-th%25E1%25BB%25A7-%25C4%2591%25E1%25BA%25BFn-t%25E1%25BB%25AB-n%2F728945255938708%2F&psig=AOvVaw2HlyEieUFs1K1YDTZcAllt&ust=1711695350707000&source=images&cd=vfe&opi=89978449&ved=0CBIQjRxqFwoTCKCm15ywloUDFQAAAAAdAAAAABAE">
+                    }
+                </td>
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
+                    @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
+                    @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+                </td>
+            </tr>
+        }
     </tbody>
 </table>
