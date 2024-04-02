@@ -9,6 +9,12 @@
             // Add services to the container.
             builder.Services.AddControllersWithViews();
 
+            // Thêm Services để cho phép sử dụng Session
+            builder.Services.AddSession(option =>
+            {
+                option.IdleTimeout = TimeSpan.FromSeconds(15); // Set thời gian timeout của Session là 5 giây
+            });
+
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.
@@ -21,7 +27,7 @@
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();
-
+            app.UseSession();
             app.UseRouting();
 
             app.UseAuthorization();

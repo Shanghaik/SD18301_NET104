@@ -19,6 +19,15 @@ namespace AppMVC.Controllers
         // 1. Lấy ra data
         public IActionResult Index(string name = "87t7r7r68r76dsz")
         {
+            // Lấy dữ liệu từ session
+            var user = HttpContext.Session.GetString("user");
+            if(user == null)
+            {
+                ViewData["message"] = "Session không tồm tại hoặc đã timeout";
+            }else
+            {
+                ViewData["message"] = $"Hello xin chào {user}";
+            }
             ViewData["count"] = 0;
             var data = repo.GetAll(); // Lấy tất cả danh sách của User
             // Lấy danh sách cần tìm kiếm theo tên có chứa chuỗi được nhập vào
@@ -76,7 +85,12 @@ namespace AppMVC.Controllers
             var user = repo.GetAll().FirstOrDefault(p => p.UserName == username && p.Password == password);
             if (user != null)
             {
-                TempData["Username"] = username;
+                // Thêm username vào session có key là user
+                HttpContext.Session.SetString("user", username);
+                // Lấy dữ liệu ra 
+                var data = HttpContext.Session.GetString("user");
+                // TempData["Username"] = username;
+                // Sửa dụng session để lưu dữ liệu đăng nhập của user
                 return RedirectToAction("Index", "User");
             }
             else return Content("Đăng nhập thất bại");
