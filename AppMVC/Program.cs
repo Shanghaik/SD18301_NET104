@@ -27,7 +27,7 @@
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();
-            app.UseSession();
+            app.UseSession(); // Phải có cái này để chạy được
             app.UseRouting();
 
             app.UseAuthorization();

@@ -1,6 +1,7 @@
 ﻿using AppData.Models;
 using AppData.Repository;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 
 namespace AppMVC.Controllers
 {
@@ -66,8 +67,25 @@ namespace AppMVC.Controllers
         public IActionResult Delete(Guid id)
         {
             var user = repo.GetByID(id);
+            // HttpContext.Session.Clear(); // Xóa dữ liệu phiên làm việc
+            var deleteData = JsonConvert.SerializeObject(user);
+            HttpContext.Session.SetString("deleted", deleteData);
             repo.DeleteObj(user);
             return RedirectToAction("Index");
+        }
+        public IActionResult RollBack()
+        {
+            var jsonData = HttpContext.Session.GetString("deleted");
+            if(jsonData == null)
+            {
+                return RedirectToAction("Index");
+            }
+            else
+            {
+                var deletedData = JsonConvert.DeserializeObject<User>(jsonData);
+                repo.CreateObj(deletedData);
+                return RedirectToAction("Index");
+            }  
         }
         public IActionResult Details(Guid id) // Details
         {
